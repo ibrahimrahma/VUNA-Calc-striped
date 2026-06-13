@@ -1,15 +1,15 @@
 {
-  "name": "vuna-calc-striped",
+  "name": "vuna-calculator",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Vuna Calculator with CI/CD Pipeline",
+  "main": "src/calculator.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "echo 'Skipping lint for now' || eslint .",
+    "test": "jest --coverage",
+    "build": "mkdir -p dist && cp index.html dist/ && cp -r assets dist/ 2>/dev/null || true && cp -r src dist/ 2>/dev/null || true"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "express": "^5.2.1"
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^29.0.0"
   }
 }

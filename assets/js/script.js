@@ -99,44 +99,6 @@ function normalizeExpression(expr) {
     .replace(/\bpi\b/g, "Math.PI");
 }
 
-function percentToResult() {
-  if (!currentExpression) return;
-
-  const match = currentExpression.match(/(.+?)(\*\*|[+\-*/^])([0-9.]*)$/);
-
-  if (!match) {
-    const num = parseFloat(currentExpression);
-    if (isNaN(num)) return;
-
-    currentExpression = (num / 100).toString();
-  } else {
-    const leftPart = match[1];
-    const rightPart = match[3];
-
-    if (!rightPart) return;
-
-    let leftVal;
-
-    try {
-      leftVal = eval(leftPart);
-    } catch (e) {
-      leftVal = parseFloat(leftPart);
-    }
-
-    const rightVal = parseFloat(rightPart);
-    if (isNaN(leftVal) || isNaN(rightVal)) return;
-
-    const percentVal = (leftVal * rightVal) / 100;
-
-    currentExpression = percentVal.toString();
-  }
-
-  // 🔥 ADD THIS LINE
-  currentExpression += "*";
-
-  updateResult();
-}
-
 // ------------------------------
 // Calculate Result
 // ------------------------------
@@ -151,7 +113,7 @@ function calculateExpression(expression) {
       LAST_RESULT,
     );
 
-    // Calculate result
+    // Calculate result (handles standard JavaScript mathematical rules including % Modulus)
     let result = eval(normalizedExpression);
     console.log("Calculated result for expression:", expression, "->", result);
  
@@ -164,6 +126,7 @@ function calculateExpression(expression) {
     return "Error";
   }
 }
+
 function calculateResult() {
   if (!currentExpression) return;
     const display = document.getElementById("result"); 
@@ -180,7 +143,6 @@ function calculateResult() {
     currentExpression = result;
     updateResult();
 }
-
 
 function updateResult() {
   document.getElementById("result").value = currentExpression || "0";
